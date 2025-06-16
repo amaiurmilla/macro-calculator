@@ -33,7 +33,6 @@ const translations = {
     fatW: 'Fat',
     carbsW: 'Carbohydrates',
     copy: '📋 Copy Result',
-    language: 'Language:',
     ageMin: 'Age must be at least 18.',
     heightMin: 'Height must be at least {min} {unit}.',
     weightMin: 'Weight must be at least {min} {unit}.',
@@ -73,7 +72,6 @@ const translations = {
     fatW: 'Grasas',
     carbsW: 'Carbohidratos',
     copy: '📋 Copiar resultado',
-    language: 'Idioma:',
     ageMin: 'La edad mínima es 18.',
     heightMin: 'La altura mínima es {min} {unit}.',
     weightMin: 'El peso mínimo es {min} {unit}.',
@@ -122,7 +120,6 @@ function applyTranslations() {
   document.getElementById('carbLabel').textContent = t.carbs;
   calculateBtn.textContent = t.calculate;
   copyBtn.textContent = t.copy;
-  document.getElementById('languageLabel').textContent = t.language;
   const isDark = document.body.classList.contains('dark');
   toggleBtn.textContent = isDark ? t.light : t.dark;
 }
