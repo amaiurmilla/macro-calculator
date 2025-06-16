@@ -10,5 +10,6 @@ function updateYear() {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = updateYear;
 } else {
+  updateYear();
   window.updateYear = updateYear;
 }

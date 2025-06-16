@@ -299,7 +299,3 @@ toggleBtn.addEventListener('click', () => {
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
 
-// Set footer year on load
-if (typeof updateYear === 'function') {
-  window.addEventListener('DOMContentLoaded', updateYear);
-}
