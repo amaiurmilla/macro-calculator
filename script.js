@@ -30,6 +30,20 @@ function validateInputs() {
   const heightError = document.getElementById('heightError');
   const weightError = document.getElementById('weightError');
 
+  const minHeightMetric = 100;
+  const minWeightMetric = 30;
+  let minHeight = minHeightMetric;
+  let minWeight = minWeightMetric;
+  let heightUnit = 'cm';
+  let weightUnit = 'kg';
+
+  if (currentUnit === 'imperial') {
+    minHeight = minHeightMetric / 2.54; // convert cm to inches
+    minWeight = minWeightMetric / 0.453592; // convert kg to lbs
+    heightUnit = 'inches';
+    weightUnit = 'lbs';
+  }
+
   if (isNaN(age) || age < 18) {
     ageError.textContent = "Age must be at least 18.";
     ageError.style.display = "block";
@@ -40,8 +54,9 @@ function validateInputs() {
     document.getElementById('age').classList.remove('invalid');
   }
 
-  if (isNaN(height) || height < 100) {
-    heightError.textContent = "Height must be at least 100 cm.";
+  if (isNaN(height) || height < minHeight) {
+    const minHeightDisplay = Math.round(minHeight);
+    heightError.textContent = `Height must be at least ${minHeightDisplay} ${heightUnit}.`;
     heightError.style.display = "block";
     document.getElementById('height').classList.add('invalid');
     valid = false;
@@ -50,8 +65,9 @@ function validateInputs() {
     document.getElementById('height').classList.remove('invalid');
   }
 
-  if (isNaN(weight) || weight < 30) {
-    weightError.textContent = "Weight must be at least 30 kg.";
+  if (isNaN(weight) || weight < minWeight) {
+    const minWeightDisplay = Math.round(minWeight);
+    weightError.textContent = `Weight must be at least ${minWeightDisplay} ${weightUnit}.`;
     weightError.style.display = "block";
     document.getElementById('weight').classList.add('invalid');
     valid = false;
