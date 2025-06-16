@@ -24,9 +24,7 @@ const translations = {
     lose: 'Lose Fat',
     maintain: 'Maintain',
     gain: 'Gain Muscle',
-    protein: 'Protein %:',
-    fat: 'Fat %:',
-    carbs: 'Carbs %:',
+    
     calculate: 'Calculate',
     estCalories: 'Estimated Daily Calories',
     proteinW: 'Protein',
@@ -36,12 +34,10 @@ const translations = {
     ageMin: 'Age must be at least 18.',
     heightMin: 'Height must be at least {min} {unit}.',
     weightMin: 'Weight must be at least {min} {unit}.',
-    ratioSum: 'Ratios must total 100%.',
     copied: 'Result copied to clipboard!',
     dark: '🌙 Dark Mode',
     light: '☀️ Light Mode',
-    advancedShow: 'Advanced Options',
-    advancedHide: 'Hide Advanced Options'
+    
   },
   es: {
     title: 'Calculadora de Macronutrientes',
@@ -65,9 +61,7 @@ const translations = {
     lose: 'Perder grasa',
     maintain: 'Mantener',
     gain: 'Ganar músculo',
-    protein: 'Proteína %:',
-    fat: 'Grasa %:',
-    carbs: 'Carbohidratos %:',
+    
     calculate: 'Calcular',
     estCalories: 'Calor\u00edas diarias estimadas',
     proteinW: 'Prote\u00ednas',
@@ -77,12 +71,10 @@ const translations = {
     ageMin: 'La edad mínima es 18.',
     heightMin: 'La altura mínima es {min} {unit}.',
     weightMin: 'El peso mínimo es {min} {unit}.',
-    ratioSum: 'Los porcentajes deben sumar 100%.',
     copied: '¡Resultado copiado!',
     dark: '🌙 Modo oscuro',
     light: '☀️ Modo claro',
-    advancedShow: 'Opciones avanzadas',
-    advancedHide: 'Ocultar opciones'
+    
   }
 };
 
@@ -92,8 +84,6 @@ const languageSelect = document.getElementById('language');
 const toggleBtn = document.getElementById('toggleDarkMode');
 const calculateBtn = document.getElementById('calculateBtn');
 const copyBtn = document.getElementById('copyBtn');
-const advancedBtn = document.getElementById('toggleAdvanced');
-const advancedSection = document.getElementById('advancedSection');
 
 function applyTranslations() {
   const t = translations[currentLang];
@@ -121,17 +111,11 @@ function applyTranslations() {
   document.querySelector('#goal option[value="lose"]').textContent = t.lose;
   document.querySelector('#goal option[value="maintain"]').textContent = t.maintain;
   document.querySelector('#goal option[value="gain"]').textContent = t.gain;
-  document.getElementById('proteinLabel').textContent = t.protein;
-  document.getElementById('fatLabel').textContent = t.fat;
-  document.getElementById('carbLabel').textContent = t.carbs;
   calculateBtn.textContent = t.calculate;
   copyBtn.textContent = t.copy;
   const isDark = document.body.classList.contains('dark');
   toggleBtn.textContent = isDark ? t.light : t.dark;
-  if (advancedBtn) {
-    const isHidden = advancedSection.style.display === 'none';
-    advancedBtn.textContent = isHidden ? t.advancedShow : t.advancedHide;
-  }
+  
 }
 
 languageSelect.addEventListener('change', () => {
@@ -140,13 +124,6 @@ languageSelect.addEventListener('change', () => {
 });
 
 window.addEventListener('DOMContentLoaded', applyTranslations);
-
-advancedBtn.addEventListener('click', () => {
-  const isHidden = advancedSection.style.display === 'none';
-  advancedSection.style.display = isHidden ? 'block' : 'none';
-  const t = translations[currentLang];
-  advancedBtn.textContent = isHidden ? t.advancedHide : t.advancedShow;
-});
 
 metricBtn.addEventListener('click', () => {
   currentUnit = 'metric';
@@ -170,14 +147,10 @@ function validateInputs() {
   const age = parseInt(document.getElementById('age').value);
   const height = parseFloat(document.getElementById('height').value);
   const weight = parseFloat(document.getElementById('weight').value);
-  const pRatio = parseFloat(document.getElementById('proteinRatio').value);
-  const fRatio = parseFloat(document.getElementById('fatRatio').value);
-  const cRatio = parseFloat(document.getElementById('carbRatio').value);
 
   const ageError = document.getElementById('ageError');
   const heightError = document.getElementById('heightError');
   const weightError = document.getElementById('weightError');
-  const ratioError = document.getElementById('ratioError');
 
   const minHeightMetric = 100;
   const minWeightMetric = 30;
@@ -229,14 +202,6 @@ function validateInputs() {
     document.getElementById('weight').classList.remove('invalid');
   }
 
-  const totalRatio = pRatio + fRatio + cRatio;
-  if (isNaN(totalRatio) || Math.round(totalRatio) !== 100) {
-    ratioError.textContent = translations[currentLang].ratioSum;
-    ratioError.style.display = 'block';
-    valid = false;
-  } else {
-    ratioError.style.display = 'none';
-  }
 
   return valid;
 }
@@ -253,10 +218,6 @@ document.getElementById('macroForm').addEventListener('submit', function (e) {
   const goal = document.getElementById('goal').value;
   const system = currentUnit;
 
-  const proteinRatio = parseFloat(document.getElementById('proteinRatio').value);
-  const fatRatio = parseFloat(document.getElementById('fatRatio').value);
-  const carbRatio = parseFloat(document.getElementById('carbRatio').value);
-
   const result = calculateMacros({
     sex,
     age,
@@ -264,8 +225,7 @@ document.getElementById('macroForm').addEventListener('submit', function (e) {
     weight,
     activity,
     goal,
-    system,
-    ratios: { protein: proteinRatio, fat: fatRatio, carbs: carbRatio }
+    system
   });
 
   const t = translations[currentLang];
@@ -291,8 +251,7 @@ document.getElementById('macroForm').addEventListener('submit', function (e) {
     weight,
     activity,
     goal,
-    unit: currentUnit,
-    ratios: { protein: proteinRatio, fat: fatRatio, carbs: carbRatio }
+    unit: currentUnit
   };
   localStorage.setItem('macroData', JSON.stringify(data));
 });
@@ -315,11 +274,6 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('weight').value = saved.weight;
   document.getElementById('activity').value = saved.activity;
   document.getElementById('goal').value = saved.goal;
-  if (saved.ratios) {
-    document.getElementById('proteinRatio').value = saved.ratios.protein;
-    document.getElementById('fatRatio').value = saved.ratios.fat;
-    document.getElementById('carbRatio').value = saved.ratios.carbs;
-  }
 
   if (saved.unit === 'imperial') {
     imperialBtn.click();
