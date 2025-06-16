@@ -8,7 +8,9 @@ self.addEventListener('install', e => {
           './script.js',
           './calculator.js',
           './manifest.json',
-          './icon.png'
+          './icon.png',
+          './locales/en.json',
+          './locales/es.json'
         ]);
       })
     );

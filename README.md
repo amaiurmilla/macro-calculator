@@ -21,3 +21,9 @@ Para ejecutar la suite de pruebas utiliza:
 npm test
 ```
 
+## Añadir nuevos idiomas
+
+1. Crea un archivo JSON en la carpeta `locales` siguiendo el formato de `en.json` o `es.json`.
+2. Añade una opción con el nuevo código de idioma en `index.html` dentro del elemento `<select id="language">`.
+3. (Opcional) Incluye el nuevo archivo en la lista de recursos del `service-worker.js` para disponer de él sin conexión.
+
