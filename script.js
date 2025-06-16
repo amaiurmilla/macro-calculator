@@ -1,82 +1,14 @@
 let currentUnit = 'metric';
 let currentLang = 'en';
+const translations = {};
 
-const translations = {
-  en: {
-    title: 'Macro Calculator',
-    system: 'System:',
-    metric: 'Metric',
-    imperial: 'Imperial',
-    sex: 'Sex:',
-    male: 'Male',
-    female: 'Female',
-    age: 'Age:',
-    height: 'Height:',
-    weight: 'Weight:',
-    activity: 'Activity Level:',
-    activity1: 'Sedentary or very little exercise',
-    activity2: 'Moderate exercise 1\u20133 days per week',
-    activity3: 'Moderate exercise 4\u20135 days per week',
-    activity4: 'Moderate exercise 7 days per week or intense exercise 3\u20134 times per week',
-    activity5: 'Intense exercise 6\u20137 days per week',
-    activity6: 'Very intense exercise 6\u20137 days per week or physically demanding job',
-    goal: 'Goal:',
-    lose: 'Lose Fat',
-    maintain: 'Maintain',
-    gain: 'Gain Muscle',
-    
-    calculate: 'Calculate',
-    estCalories: 'Estimated Daily Calories',
-    proteinW: 'Protein',
-    fatW: 'Fat',
-    carbsW: 'Carbohydrates',
-    copy: '📋 Copy Result',
-    ageMin: 'Age must be at least 18.',
-    heightMin: 'Height must be at least {min} {unit}.',
-    weightMin: 'Weight must be at least {min} {unit}.',
-    copied: 'Result copied to clipboard!',
-    dark: '🌙 Dark Mode',
-    light: '☀️ Light Mode',
-    
-  },
-  es: {
-    title: 'Calculadora de Macronutrientes',
-    system: 'Sistema:',
-    metric: 'Métrico',
-    imperial: 'Imperial',
-    sex: 'Sexo:',
-    male: 'Hombre',
-    female: 'Mujer',
-    age: 'Edad:',
-    height: 'Altura:',
-    weight: 'Peso:',
-    activity: 'Nivel de actividad:',
-    activity1: 'Sedentario o muy poco ejercicio',
-    activity2: 'Ejercicio moderado 1\u20133 d\xedas por semana',
-    activity3: 'Ejercicio moderado 4\u20135 d\xedas por semana',
-    activity4: 'Ejercicio moderado 7 d\xedas o intenso 3\u20134 veces por semana',
-    activity5: 'Ejercicio intenso 6\u20137 d\xedas por semana',
-    activity6: 'Ejercicio muy intenso 6\u20137 d\xedas o trabajo f\xedsicamente demandante',
-    goal: 'Objetivo:',
-    lose: 'Perder grasa',
-    maintain: 'Mantener',
-    gain: 'Ganar músculo',
-    
-    calculate: 'Calcular',
-    estCalories: 'Calor\u00edas diarias estimadas',
-    proteinW: 'Prote\u00ednas',
-    fatW: 'Grasas',
-    carbsW: 'Carbohidratos',
-    copy: '📋 Copiar resultado',
-    ageMin: 'La edad mínima es 18.',
-    heightMin: 'La altura mínima es {min} {unit}.',
-    weightMin: 'El peso mínimo es {min} {unit}.',
-    copied: '¡Resultado copiado!',
-    dark: '🌙 Modo oscuro',
-    light: '☀️ Modo claro',
-    
-  }
-};
+async function loadTranslations(lang) {
+  if (translations[lang]) return translations[lang];
+  const response = await fetch(`./locales/${lang}.json`);
+  const data = await response.json();
+  translations[lang] = data;
+  return data;
+}
 
 const metricBtn = document.getElementById('metricBtn');
 const imperialBtn = document.getElementById('imperialBtn');
@@ -84,6 +16,13 @@ const languageSelect = document.getElementById('language');
 const toggleBtn = document.getElementById('toggleDarkMode');
 const calculateBtn = document.getElementById('calculateBtn');
 const copyBtn = document.getElementById('copyBtn');
+const toast = document.getElementById('toast');
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
 
 function applyTranslations() {
   const t = translations[currentLang];
@@ -118,12 +57,11 @@ function applyTranslations() {
   
 }
 
-languageSelect.addEventListener('change', () => {
+languageSelect.addEventListener('change', async () => {
   currentLang = languageSelect.value;
+  await loadTranslations(currentLang);
   applyTranslations();
 });
-
-window.addEventListener('DOMContentLoaded', applyTranslations);
 
 metricBtn.addEventListener('click', () => {
   currentUnit = 'metric';
@@ -260,25 +198,26 @@ document.getElementById('macroForm').addEventListener('submit', function (e) {
 document.getElementById('copyBtn').addEventListener('click', () => {
   const text = document.getElementById('results').textContent;
   navigator.clipboard.writeText(text);
-  alert(translations[currentLang].copied);
+  showToast(translations[currentLang].copied);
 });
 
 // RECUPERAR DATOS
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
+  await loadTranslations(currentLang);
   const saved = JSON.parse(localStorage.getItem('macroData'));
-  if (!saved) return;
+  if (saved) {
+    document.getElementById('sex').value = saved.sex;
+    document.getElementById('age').value = saved.age;
+    document.getElementById('height').value = saved.height;
+    document.getElementById('weight').value = saved.weight;
+    document.getElementById('activity').value = saved.activity;
+    document.getElementById('goal').value = saved.goal;
 
-  document.getElementById('sex').value = saved.sex;
-  document.getElementById('age').value = saved.age;
-  document.getElementById('height').value = saved.height;
-  document.getElementById('weight').value = saved.weight;
-  document.getElementById('activity').value = saved.activity;
-  document.getElementById('goal').value = saved.goal;
-
-  if (saved.unit === 'imperial') {
-    imperialBtn.click();
-  } else {
-    metricBtn.click();
+    if (saved.unit === 'imperial') {
+      imperialBtn.click();
+    } else {
+      metricBtn.click();
+    }
   }
 
   applyTranslations();
@@ -290,7 +229,6 @@ const prefersDark = localStorage.getItem('theme') === 'dark';
 if (prefersDark) {
   document.body.classList.add('dark');
 }
-toggleBtn.textContent = prefersDark ? translations[currentLang].light : translations[currentLang].dark;
 
 toggleBtn.addEventListener('click', () => {
   document.body.classList.toggle('dark');
@@ -298,4 +236,8 @@ toggleBtn.addEventListener('click', () => {
   toggleBtn.textContent = isDark ? translations[currentLang].light : translations[currentLang].dark;
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
+
+if (typeof module !== 'undefined') {
+  module.exports = { loadTranslations };
+}
 
