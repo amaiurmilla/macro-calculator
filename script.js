@@ -240,3 +240,4 @@ toggleBtn.addEventListener('click', () => {
 if (typeof module !== 'undefined') {
   module.exports = { loadTranslations };
 }
+

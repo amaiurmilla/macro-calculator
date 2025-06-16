@@ -66,16 +66,16 @@
     </form>
 
     <div id="results" class="fade-in"></div>
-  <button id="copyBtn" class="copy-button" style="display: none;">📋 Copy Result</button>
+    <button id="copyBtn" class="copy-button" style="display: none;">📋 Copy Result</button>
   </div>
 
   <footer>
-    &copy; 2025 Amaiur Milla. All rights reserved.
+    &copy; <span id="year"></span> Amaiur Milla. All rights reserved.
   </footer>
 
-  <div id="toast" class="toast"></div>
 
   <script src="calculator.js"></script>
+  <script src="year.js"></script>
   <script src="script.js"></script>
   <script>
     if ('serviceWorker' in navigator) {

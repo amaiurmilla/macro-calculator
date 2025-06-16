@@ -1,6 +1,7 @@
 const assert = require('assert/strict');
 const calculateMacros = require('../calculator');
 const { test } = require('node:test');
+const updateYear = require('../year');
 
 test('calculate macros for metric male example', () => {
   const result = calculateMacros({
