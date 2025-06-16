@@ -69,52 +69,19 @@ document.getElementById('macroForm').addEventListener('submit', function (e) {
 
   const sex = document.getElementById('sex').value;
   const age = parseInt(document.getElementById('age').value);
-  let height = parseFloat(document.getElementById('height').value);
-  let weight = parseFloat(document.getElementById('weight').value);
+  const height = parseFloat(document.getElementById('height').value);
+  const weight = parseFloat(document.getElementById('weight').value);
   const activity = parseFloat(document.getElementById('activity').value);
   const goal = document.getElementById('goal').value;
   const system = currentUnit;
 
-  if (system === 'imperial') {
-    height *= 2.54;
-    weight *= 0.453592;
-  }
+  const result = calculateMacros({ sex, age, height, weight, activity, goal, system });
 
-  let tmb;
-  if (sex === 'male') {
-    tmb = 10 * weight + 6.25 * height - 5 * age + 5;
-  } else {
-    tmb = 10 * weight + 6.25 * height - 5 * age - 161;
-  }
-
-  const maintenanceCalories = tmb * activity;
-
-  let finalCalories;
-  if (goal === 'lose') {
-    finalCalories = maintenanceCalories - 500;
-  } else if (goal === 'gain') {
-    finalCalories = maintenanceCalories + 300;
-  } else {
-    finalCalories = maintenanceCalories;
-  }
-
-  const proteinGrams = weight * 2.2;
-  const fatGrams = weight * 1;
-  const proteinCalories = proteinGrams * 4;
-  const fatCalories = fatGrams * 9;
-  const carbsCalories = finalCalories - (proteinCalories + fatCalories);
-  const carbsGrams = carbsCalories / 4;
-
-  const total = proteinCalories + fatCalories + carbsCalories;
-  const pPct = (proteinCalories / total) * 100;
-  const fPct = (fatCalories / total) * 100;
-  const cPct = (carbsCalories / total) * 100;
-
-  const resultText = 
-    `Estimated Daily Calories: ${finalCalories.toFixed(0)} kcal\n` +
-    `Protein: ${proteinGrams.toFixed(0)} g (${pPct.toFixed(0)}%)\n` +
-    `Fat: ${fatGrams.toFixed(0)} g (${fPct.toFixed(0)}%)\n` +
-    `Carbohydrates: ${carbsGrams.toFixed(0)} g (${cPct.toFixed(0)}%)`;
+  const resultText =
+    `Estimated Daily Calories: ${result.calories.toFixed(0)} kcal\n` +
+    `Protein: ${result.proteinGrams.toFixed(0)} g (${result.proteinPercent.toFixed(0)}%)\n` +
+    `Fat: ${result.fatGrams.toFixed(0)} g (${result.fatPercent.toFixed(0)}%)\n` +
+    `Carbohydrates: ${result.carbsGrams.toFixed(0)} g (${result.carbsPercent.toFixed(0)}%)`;
 
   const resultsDiv = document.getElementById('results');
   resultsDiv.classList.remove('fade-in');
