@@ -6,6 +6,7 @@ self.addEventListener('install', e => {
           './index.html',
           './style.css',
           './script.js',
+          './calculator.js',
           './manifest.json',
           './icon.png'
         ]);
@@ -20,4 +21,3 @@ self.addEventListener('install', e => {
       })
     );
   });
-  
