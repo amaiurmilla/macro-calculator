@@ -40,7 +40,9 @@ const translations = {
     ratioSum: 'Ratios must total 100%.',
     copied: 'Result copied to clipboard!',
     dark: '🌙 Dark Mode',
-    light: '☀️ Light Mode'
+    light: '☀️ Light Mode',
+    advancedShow: 'Advanced Options',
+    advancedHide: 'Hide Advanced Options'
   },
   es: {
     title: 'Calculadora de Macronutrientes',
@@ -80,7 +82,9 @@ const translations = {
     ratioSum: 'Los porcentajes deben sumar 100%.',
     copied: '¡Resultado copiado!',
     dark: '🌙 Modo oscuro',
-    light: '☀️ Modo claro'
+    light: '☀️ Modo claro',
+    advancedShow: 'Opciones avanzadas',
+    advancedHide: 'Ocultar opciones'
   }
 };
 
@@ -90,6 +94,8 @@ const languageSelect = document.getElementById('language');
 const toggleBtn = document.getElementById('toggleDarkMode');
 const calculateBtn = document.getElementById('calculateBtn');
 const copyBtn = document.getElementById('copyBtn');
+const advancedBtn = document.getElementById('toggleAdvanced');
+const advancedSection = document.getElementById('advancedSection');
 
 function applyTranslations() {
   const t = translations[currentLang];
@@ -125,6 +131,10 @@ function applyTranslations() {
   document.getElementById('languageLabel').textContent = t.language;
   const isDark = document.body.classList.contains('dark');
   toggleBtn.textContent = isDark ? t.light : t.dark;
+  if (advancedBtn) {
+    const isHidden = advancedSection.style.display === 'none';
+    advancedBtn.textContent = isHidden ? t.advancedShow : t.advancedHide;
+  }
 }
 
 languageSelect.addEventListener('change', () => {
@@ -133,6 +143,13 @@ languageSelect.addEventListener('change', () => {
 });
 
 window.addEventListener('DOMContentLoaded', applyTranslations);
+
+advancedBtn.addEventListener('click', () => {
+  const isHidden = advancedSection.style.display === 'none';
+  advancedSection.style.display = isHidden ? 'block' : 'none';
+  const t = translations[currentLang];
+  advancedBtn.textContent = isHidden ? t.advancedHide : t.advancedShow;
+});
 
 metricBtn.addEventListener('click', () => {
   currentUnit = 'metric';
