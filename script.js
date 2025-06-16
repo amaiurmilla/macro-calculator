@@ -84,6 +84,13 @@ const languageSelect = document.getElementById('language');
 const toggleBtn = document.getElementById('toggleDarkMode');
 const calculateBtn = document.getElementById('calculateBtn');
 const copyBtn = document.getElementById('copyBtn');
+const toast = document.getElementById('toast');
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
 
 function applyTranslations() {
   const t = translations[currentLang];
@@ -260,7 +267,7 @@ document.getElementById('macroForm').addEventListener('submit', function (e) {
 document.getElementById('copyBtn').addEventListener('click', () => {
   const text = document.getElementById('results').textContent;
   navigator.clipboard.writeText(text);
-  alert(translations[currentLang].copied);
+  showToast(translations[currentLang].copied);
 });
 
 // RECUPERAR DATOS
