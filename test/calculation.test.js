@@ -1,6 +1,7 @@
 const assert = require('assert/strict');
 const calculateMacros = require('../calculator');
 const { test } = require('node:test');
+const updateYear = require('../year');
 
 test('calculate macros for metric male example', () => {
   const result = calculateMacros({
@@ -68,4 +69,8 @@ test('calculate macros for imperial male example', () => {
   assert.ok(Math.abs(result.proteinGrams - 175.63) < 0.1);
   assert.ok(Math.abs(result.fatGrams - 79.83) < 0.1);
   assert.ok(Math.abs(result.carbsGrams - 334.67) < 0.01);
+});
+
+test('year updater export', () => {
+  assert.equal(typeof updateYear, 'function');
 });

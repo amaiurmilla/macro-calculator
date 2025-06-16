@@ -298,3 +298,8 @@ toggleBtn.addEventListener('click', () => {
   toggleBtn.textContent = isDark ? translations[currentLang].light : translations[currentLang].dark;
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
+
+// Set footer year on load
+if (typeof updateYear === 'function') {
+  window.addEventListener('DOMContentLoaded', updateYear);
+}
