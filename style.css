@@ -212,8 +212,18 @@ body {
     position: absolute;
     top: 20px;
     left: 20px;
-    padding: 8px;
+    padding: 8px 12px;
     font-size: 14px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    background: white;
+    color: #007bff;
+  }
+
+  body.dark .language-select {
+    background: #2c2c2c;
+    color: #f1f1f1;
+    border-color: #555;
   }
   
   .dark-mode-btn:hover {
