@@ -1,4 +1,4 @@
-function calculateMacros({sex, age, height, weight, activity, goal, system}) {
+function calculateMacros({sex, age, height, weight, activity, goal, system, ratios}) {
   if (system === 'imperial') {
     height *= 2.54;
     weight *= 0.453592;
@@ -22,12 +22,24 @@ function calculateMacros({sex, age, height, weight, activity, goal, system}) {
     finalCalories = maintenanceCalories;
   }
 
-  const proteinGrams = weight * 2.2;
-  const fatGrams = weight * 1;
-  const proteinCalories = proteinGrams * 4;
-  const fatCalories = fatGrams * 9;
-  const carbsCalories = finalCalories - (proteinCalories + fatCalories);
-  const carbsGrams = carbsCalories / 4;
+  let proteinGrams, fatGrams, carbsGrams;
+  let proteinCalories, fatCalories, carbsCalories;
+
+  if (ratios) {
+    proteinCalories = finalCalories * (ratios.protein / 100);
+    fatCalories = finalCalories * (ratios.fat / 100);
+    carbsCalories = finalCalories * (ratios.carbs / 100);
+    proteinGrams = proteinCalories / 4;
+    fatGrams = fatCalories / 9;
+    carbsGrams = carbsCalories / 4;
+  } else {
+    proteinGrams = weight * 2.2;
+    fatGrams = weight * 1;
+    proteinCalories = proteinGrams * 4;
+    fatCalories = fatGrams * 9;
+    carbsCalories = finalCalories - (proteinCalories + fatCalories);
+    carbsGrams = carbsCalories / 4;
+  }
 
   const total = proteinCalories + fatCalories + carbsCalories;
   const pPct = (proteinCalories / total) * 100;

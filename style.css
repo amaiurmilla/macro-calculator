@@ -207,6 +207,14 @@ body {
     cursor: pointer;
     transition: background 0.3s ease;
   }
+
+  .language-select {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 8px;
+    font-size: 14px;
+  }
   
   .dark-mode-btn:hover {
     background: #0056b3;
