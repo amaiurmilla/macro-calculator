@@ -1,13 +1,93 @@
 let currentUnit = 'metric';
 let currentLang = 'en';
+
+const defaultTranslations = {
+  en: {
+    "title": "Macro Calculator",
+    "system": "System:",
+    "metric": "Metric",
+    "imperial": "Imperial",
+    "sex": "Sex:",
+    "male": "Male",
+    "female": "Female",
+    "age": "Age:",
+    "height": "Height:",
+    "weight": "Weight:",
+    "activity": "Activity Level:",
+    "activity1": "Sedentary or very little exercise",
+    "activity2": "Moderate exercise 1–3 days per week",
+    "activity3": "Moderate exercise 4–5 days per week",
+    "activity4": "Moderate exercise 7 days per week or intense exercise 3–4 times per week",
+    "activity5": "Intense exercise 6–7 days per week",
+    "activity6": "Very intense exercise 6–7 days per week or physically demanding job",
+    "goal": "Goal:",
+    "lose": "Lose Fat",
+    "maintain": "Maintain",
+    "gain": "Gain Muscle",
+    "calculate": "Calculate",
+    "estCalories": "Estimated Daily Calories",
+    "proteinW": "Protein",
+    "fatW": "Fat",
+    "carbsW": "Carbohydrates",
+    "copy": "\uD83D\uDCCB Copy Result",
+    "ageMin": "Age must be at least 18.",
+    "heightMin": "Height must be at least {min} {unit}.",
+    "weightMin": "Weight must be at least {min} {unit}.",
+    "copied": "Result copied to clipboard!",
+    "dark": "\uD83C\uDF19 Dark Mode",
+    "light": "\u2600\uFE0F Light Mode"
+  },
+  es: {
+    "title": "Calculadora de Macronutrientes",
+    "system": "Sistema:",
+    "metric": "Métrico",
+    "imperial": "Imperial",
+    "sex": "Sexo:",
+    "male": "Hombre",
+    "female": "Mujer",
+    "age": "Edad:",
+    "height": "Altura:",
+    "weight": "Peso:",
+    "activity": "Nivel de actividad:",
+    "activity1": "Sedentario o muy poco ejercicio",
+    "activity2": "Ejercicio moderado 1–3 días por semana",
+    "activity3": "Ejercicio moderado 4–5 días por semana",
+    "activity4": "Ejercicio moderado 7 días o intenso 3–4 veces por semana",
+    "activity5": "Ejercicio intenso 6–7 días por semana",
+    "activity6": "Ejercicio muy intenso 6–7 días o trabajo físicamente demandante",
+    "goal": "Objetivo:",
+    "lose": "Perder grasa",
+    "maintain": "Mantener",
+    "gain": "Ganar músculo",
+    "calculate": "Calcular",
+    "estCalories": "Calorías diarias estimadas",
+    "proteinW": "Proteínas",
+    "fatW": "Grasas",
+    "carbsW": "Carbohidratos",
+    "copy": "\uD83D\uDCCB Copiar resultado",
+    "ageMin": "La edad mínima es 18.",
+    "heightMin": "La altura mínima es {min} {unit}.",
+    "weightMin": "El peso mínimo es {min} {unit}.",
+    "copied": "¡Resultado copiado!",
+    "dark": "\uD83C\uDF19 Modo oscuro",
+    "light": "\u2600\uFE0F Modo claro"
+  }
+};
+
 const translations = {};
 
 async function loadTranslations(lang) {
   if (translations[lang]) return translations[lang];
-  const response = await fetch(`./locales/${lang}.json`);
-  const data = await response.json();
-  translations[lang] = data;
-  return data;
+  try {
+    const response = await fetch(`./locales/${lang}.json`);
+    if (!response.ok) throw new Error('network');
+    const data = await response.json();
+    translations[lang] = data;
+    return data;
+  } catch (e) {
+    translations[lang] = defaultTranslations[lang] || defaultTranslations['en'];
+    return translations[lang];
+  }
 }
 
 const metricBtn = document.getElementById('metricBtn');
