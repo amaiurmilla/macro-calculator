@@ -10,7 +10,13 @@ self.addEventListener('install', e => {
           './manifest.json',
           './icon.png',
           './locales/en.json',
-          './locales/es.json'
+          './locales/es.json',
+          './locales/pt.json',
+          './locales/fr.json',
+          './locales/de.json',
+          './locales/it.json',
+          './locales/tr.json',
+          './locales/pl.json'
         ]);
       })
     );
