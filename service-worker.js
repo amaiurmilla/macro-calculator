@@ -5,6 +5,7 @@ self.addEventListener('install', e => {
           './',
           './index.html',
           './style.css',
+          './products.html',
           './script.js',
           './calculator.js',
           './manifest.json',
