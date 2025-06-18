@@ -1,15 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Macro Calculator</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Macros – Herramienta de Macronutrientes</title>
+  <meta name="description" content="Calculadora de macros para planificar tus macronutrientes según tu objetivo." />
+  <meta name="keywords" content="calculadora de macros, macronutrientes, nutrición, dieta" />
+  <link rel="canonical" href="https://example.com/index.html" />
+  <link rel="alternate" hreflang="es" href="https://example.com/index.html" />
+  <link rel="alternate" hreflang="en" href="https://example.com/index.html?lang=en" />
+  <meta property="og:title" content="Calculadora de Macros" />
+  <meta property="og:description" content="Calcula fácilmente tus macronutrientes diarios." />
+  <meta property="og:url" content="https://example.com/index.html" />
+  <meta property="og:image" content="https://example.com/icon.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Calculadora de Macros" />
+  <meta name="twitter:description" content="Calcula fácilmente tus macronutrientes diarios." />
+  <link rel="stylesheet" href="style.min.css" />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/png" href="icon.png" />
   <meta name="theme-color" content="#007bff" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Calculadora de Macros",
+    "description": "Herramienta web para calcular macronutrientes",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web",
+    "url": "https://example.com/index.html"
+  }
+  </script>
 </head>
 <body>
+  <header>
   <button id="toggleDarkMode" class="dark-mode-btn">🌙 Dark Mode</button>
   <select id="language" class="language-select">
     <option value="en">English</option>
@@ -21,7 +45,8 @@
     <option value="tr">Türkçe</option>
     <option value="pl">Polski</option>
   </select>
-
+  </header>
+  <main>
   <div class="container">
     <h1>Macro Calculator</h1>
 
@@ -75,21 +100,21 @@
   <button id="copyBtn" class="copy-button" style="display: none;">📋 Copy Result</button>
   <a href="products.html" class="affiliate-btn">Recommended Products</a>
   </div>
-
+  </main>
   <footer>
     &copy; 2025 Amaiur Milla. All rights reserved.
   </footer>
 
   <div id="toast" class="toast"></div>
 
-  <script src="calculator.js"></script>
-  <script src="script.js"></script>
+  <script src="calculator.min.js"></script>
+  <script src="script.min.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
         .then(() => console.log('Service Worker Registered'));
     }
   </script>
-  
+
 </body>
 </html>
