@@ -138,9 +138,22 @@ body {
     display: block;
     transition: background 0.3s ease;
   }
-  
+
   .copy-button:hover {
     background-color: #1e7e34;
+  }
+
+  .copy-message {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #28a745;
+    opacity: 0;
+    text-align: center;
+    transition: opacity 0.3s ease;
+  }
+
+  .copy-message.show {
+    opacity: 1;
   }
   
   /* Footer */
@@ -192,6 +205,10 @@ body {
   body.dark #results {
     background-color: #2a2a2a;
     color: #e0e0e0;
+  }
+
+  body.dark .copy-message {
+    color: #71d88a;
   }
   
   .dark-mode-btn {
@@ -246,29 +263,6 @@ body {
     }
   }
 
-  /* Toast */
-  .toast {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 6px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-
-  .toast.show {
-    opacity: 1;
-  }
-
-  body.dark .toast {
-    background: rgba(255, 255, 255, 0.9);
-    color: #000;
-  }
   
 /* Affiliate button */
 .affiliate-btn {
