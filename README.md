@@ -21,6 +21,14 @@ Para ejecutar la suite de pruebas utiliza:
 npm test
 ```
 
+## Browser Compatibility
+
+`script.min.js` uses modern JavaScript features (ES2015+), such as `let`, arrow
+functions and `async/await`. These are unsupported in older browsers like
+Internet Explorer. Use a modern browser (Chrome, Firefox, Safari, Edge, etc.) to
+run the application. If legacy browser support is required, compile the source
+with a tool such as Babel before deployment.
+
 ## Añadir nuevos idiomas
 
 1. Crea un archivo JSON en la carpeta `locales` siguiendo el formato de `en.json` o `es.json`.
