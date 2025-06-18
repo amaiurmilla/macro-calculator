@@ -1,5 +1,6 @@
 let currentUnit = 'metric';
-let currentLang = 'en';
+let currentLang = document.documentElement.lang ||
+  (navigator.language ? navigator.language.slice(0, 2) : 'en');
 
 const defaultTranslations = {
   en: {
@@ -350,6 +351,7 @@ function applyTranslations() {
 languageSelect.addEventListener('change', async () => {
   currentLang = languageSelect.value;
   await loadTranslations(currentLang);
+  document.documentElement.lang = currentLang;
   applyTranslations();
 });
 
@@ -494,6 +496,8 @@ document.getElementById('copyBtn').addEventListener('click', () => {
 // RECUPERAR DATOS
 window.addEventListener('DOMContentLoaded', async () => {
   await loadTranslations(currentLang);
+  document.documentElement.lang = currentLang;
+  languageSelect.value = currentLang;
   const saved = JSON.parse(localStorage.getItem('macroData'));
   if (saved) {
     document.getElementById('sex').value = saved.sex;
